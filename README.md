@@ -1,9 +1,9 @@
 # conformal-prediction
 
-Wrap **any** trained classifier so its predictions come with a **guaranteed coverage** — a
+Wrap **any** trained classifier so its predictions come with a **guaranteed coverage**, a
 prediction *set* that contains the true label at least (say) 90% of the time, with a
 distribution-free, finite-sample proof. No retraining, no calibration assumptions. And a direct
-demonstration that the thing people reach for instead — the model's softmax "confidence" — does
+demonstration that the thing people reach for instead, the model's softmax "confidence", does
 **not** give you that guarantee.
 
 ```bash
@@ -20,13 +20,13 @@ on. The nonconformity score of the true label is `s = 1 − p[true]`. Take the f
 
 > **P(true label ∈ set) ≥ 1 − α**
 
-The naive alternative — "predict the top class and trust its softmax probability" — has no such
+The naive alternative, "predict the top class and trust its softmax probability", has no such
 guarantee. When the model is over-confident (here a Random Forest, 81% accurate on a noisy
 6-class problem), its confidence is a story, not a coverage rate.
 
 ## Measured results
 
-`conformal` — 1500 test points, RandomForest @ 81.2% accuracy:
+`conformal`, 1500 test points, RandomForest @ 81.2% accuracy:
 
 | target coverage | conformal coverage | conformal set size | naive coverage | naive set size |
 |---|---|---|---|---|
@@ -37,11 +37,11 @@ guarantee. When the model is over-confident (here a Random Forest, 81% accurate 
 Two things to read off this table:
 
 - **Conformal hits every target; naive softmax plateaus at the model's accuracy.** "Predict the
-  argmax and trust the confidence" delivers ~81% coverage *no matter what target you ask for* —
+  argmax and trust the confidence" delivers ~81% coverage *no matter what target you ask for*, 
   it literally cannot give you 90% or 95%, because it never grows the set. Ask for 95% coverage
   and you silently get 81%. That 14-point gap is the model's miscalibration, made concrete.
 - **Conformal buys coverage with set size, honestly.** To guarantee 80% it returns ~1 class; to
-  guarantee 95% it returns ~3.2 — the set *grows on the hard inputs* where the model is genuinely
+  guarantee 95% it returns ~3.2, the set *grows on the hard inputs* where the model is genuinely
   uncertain. You get the coverage you asked for and an honest signal of where the model is unsure,
   instead of a confident single guess that's wrong 1 time in 5.
 
@@ -52,7 +52,7 @@ The only difference between the two columns is the threshold: conformal uses the
 
 Prediction sets with a real coverage guarantee are how you ship a classifier into a
 decision-critical loop (triage, moderation, anything with a human reviewer) and make an honest
-promise about its error rate — without assuming the softmax is calibrated, which it almost never
+promise about its error rate, without assuming the softmax is calibrated, which it almost never
 is. The method is model-agnostic: swap the Random Forest for any `predict_proba` estimator and the
 guarantee holds.
 
