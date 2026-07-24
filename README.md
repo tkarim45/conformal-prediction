@@ -11,6 +11,13 @@ conformal            # coverage table: conformal vs naive softmax
 conformal --json
 ```
 
+
+## Architecture
+
+![architecture](docs/assets/architecture.png)
+
+*Interactive/exportable version: [`docs/assets/architecture.html`](docs/assets/architecture.html).*
+
 ## The idea
 
 Split-conformal prediction (LAC) needs one held-out **calibration** set the model never trained
